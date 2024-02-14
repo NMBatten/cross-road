@@ -15,8 +15,8 @@ pygame.display.set_caption("Don't get hit :)")
 
 class Groups:
     obstacles = pygame.sprite.Group()
+
     
-    pass
 
 while True:
 
