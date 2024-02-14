@@ -1,6 +1,7 @@
 from pygame.locals import *
 from constants import Constants as con
 import pygame, time, sys
+from player import Player
 
 pygame.init()
 vec = pygame.math.Vector2
@@ -10,6 +11,12 @@ FramePerSec = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((con.WIDTH, con.HEIGHT))
 pygame.display.set_caption("Don't get hit :)")
 
+
+
+class Groups:
+    obstacles = pygame.sprite.Group()
+    
+    pass
 
 while True:
 
