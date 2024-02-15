@@ -4,25 +4,26 @@ from constants import Constants as con
 from groups import Groups
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, vec):
+    def __init__(self):
         super().__init__()
 
         self.surf = pygame.Surface((20, 20))
-        self.surf.fill((200, 150, 0))
+        self.surf.fill((200, 250, 250))
         self.rect = self.surf.get_rect()
+        self.score = 0
 
-        self.pos = vec((con.SCREEN_WIDTH / 2, con.SCREEN_HEIGHT - 10))
-        self.jumping = False
+        self.rect.center = ((con.SCREEN_WIDTH / 2, con.SCREEN_HEIGHT - 45))
+        # self.jumping = False
 
     def jump(self, key):
         if key == pygame.K_UP:
-            self.pos.x += 30
+            self.rect.centery -= 30
         elif key == pygame.K_DOWN:
-            self.pos.x -= 30
+            self.rect.centery += 30
         elif key == pygame.K_LEFT:
-            self.pos.y += 30
+            self.rect.centerx -= 30
         elif key == pygame.K_RIGHT:
-            self.pos.y -= 30
+            self.rect.centerx += 30
 
     def update(self):
         # hits = pygame.sprite.spritecollide(self, Groups.obstacles,  False)

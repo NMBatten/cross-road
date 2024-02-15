@@ -12,7 +12,7 @@ class Constants:
     FPS = 60
 
     # Colors
-    grass_green = (20, 200, 5)
+    grass_green = (20, 230, 5)
     river_blue = (5, 10, 230)
     road_gray = (200, 200, 200)
     truck_color = (240, 0, 10)

@@ -13,7 +13,7 @@ FramePerSec = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((con.SCREEN_WIDTH, con.SCREEN_HEIGHT))
 pygame.display.set_caption("Don't get hit :)")
 
-p1 = Player(vec)
+p1 = Player()
 
 # This variable tracks which slot is on top so the next slot can
 # be put on top of it
@@ -58,6 +58,7 @@ def setup():
                     group.add(object)
 
 setup()
+fps_counter = 0
 
 while True:
 
@@ -75,8 +76,14 @@ while True:
     for object in Groups.deadly_obstacles:
         object.update()
 
-    for entity in Groups.all_sprites:
+    for entity in Groups.slots:
         displaysurface.blit(entity.surf, entity.rect)
+
+    for entity in Groups.deadly_obstacles:
+        displaysurface.blit(entity.surf, entity.rect)
+
+    displaysurface.blit(p1.surf, p1.rect)
+
 
     pygame.display.update()
     FramePerSec.tick(con.FPS)

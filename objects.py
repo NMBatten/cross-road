@@ -46,7 +46,6 @@ class Truck(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect()
         self.slot = slot
 
-        vec = pygame.math.Vector2
         if not random_start:
             if self.slot.object_speed > 0:
                 xval = self.slot.rect.left
