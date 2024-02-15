@@ -27,6 +27,7 @@ def generate_slot(slot_type):
         slot = Slot(slot_pos())
     elif slot_type == "road":
         slot = RoadSlot(slot_pos())
+    
     global top_slot
     top_slot = slot
     # print(top_slot)
@@ -57,22 +58,7 @@ def setup():
                 for group in associated_groups:
                     group.add(object)
 
-setup()
-fps_counter = 0
-
-while True:
-
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-
-        if event.type == pygame.KEYDOWN:
-            if event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_RIGHT, pygame.K_LEFT]:
-                p1.jump(event.key)
-
-    displaysurface.fill(con.grass_green)
-
+def display_objects():
     for object in Groups.deadly_obstacles:
         object.update()
 
@@ -83,6 +69,32 @@ while True:
         displaysurface.blit(entity.surf, entity.rect)
 
     displaysurface.blit(p1.surf, p1.rect)
+
+setup()
+fps_counter = 0
+
+while True:
+    fps_counter += 1
+
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
+
+        if event.type == pygame.KEYDOWN:
+            if event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_RIGHT, pygame.K_LEFT]:
+                p1.jump(event.key)
+
+    if p1.rect.top <= con.SCREEN_HEIGHT / 2.5:
+        for object in Groups.all_sprites:
+            object.rect.centery += 30
+
+    while top_slot.rect.top > - 100:
+        generate_block()
+
+    displaysurface.fill(con.grass_green)
+
+    display_objects()
 
 
     pygame.display.update()

@@ -19,11 +19,15 @@ class Player(pygame.sprite.Sprite):
         if key == pygame.K_UP:
             self.rect.centery -= 30
         elif key == pygame.K_DOWN:
-            self.rect.centery += 30
+            if not self.rect.centery + 30 > con.SCREEN_HEIGHT:
+                self.rect.centery += 30
         elif key == pygame.K_LEFT:
-            self.rect.centerx -= 30
+            if not self.rect.centerx - 30 < 0:
+                self.rect.centerx -= 30
         elif key == pygame.K_RIGHT:
-            self.rect.centerx += 30
+            if not self.rect.centerx + 30 > con.SCREEN_WIDTH:
+                self.rect.centerx += 30
+
 
     def update(self):
         # hits = pygame.sprite.spritecollide(self, Groups.obstacles,  False)
