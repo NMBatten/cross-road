@@ -2,7 +2,7 @@ from pygame.locals import *
 from constants import Constants as con
 import pygame, time, sys, random
 from player import Player
-from objects import Slot, RoadSlot
+from objects import Slot, RoadSlot, RiverSlot
 from groups import Groups
 
 pygame.init()
@@ -28,12 +28,14 @@ def generate_slot(slot_type):
         slot = Slot(slot_pos())
     elif slot_type == "road":
         slot = RoadSlot(slot_pos())
+    elif slot_type == "river":
+        slot = RiverSlot(slot_pos())
 
     if slot.type != "grass":
-            for index in range(random.randint(1, 3)):
-                object, associated_groups = slot.generate_obstacle(True)
-                for group in associated_groups:
-                    group.add(object)
+        for index in range(random.randint(1, 3)):
+            object, associated_groups = slot.generate_obstacle(True)
+            for group in associated_groups:
+                group.add(object)
 
     global top_slot
     top_slot = slot
@@ -47,9 +49,14 @@ def slot_pos():
 def generate_block():
     # generates a random of slots of a certain type sandwiched
     # between two strips of grass
+    rval = random.randint(0,1)
+    if rval:
+        type = "road"
+    else:
+        type = "river"
     generate_slot("grass")
     for index in range(random.randint(3, 8)):
-        generate_slot("road")
+        generate_slot(type)
     # generate_slot("grass")
 
 
@@ -68,6 +75,10 @@ def display_objects():
 
     for entity in Groups.deadly_obstacles:
         displaysurface.blit(entity.surf, entity.rect)
+
+    for log in Groups.logs:
+        log.update()
+        displaysurface.blit(log.surf, log.rect)
 
     displaysurface.blit(p1.surf, p1.rect)
 

@@ -7,3 +7,4 @@ class Groups:
     blocking_obstacles = pygame.sprite.Group()
     obstacles = pygame.sprite.Group()
     slots = pygame.sprite.Group()
+    logs = pygame.sprite.Group()

@@ -16,6 +16,7 @@ class Constants:
     river_blue = (5, 10, 230)
     road_gray = (200, 200, 200)
     truck_color = (240, 0, 10)
+    log_brown = (185, 100, 100)
 
     # Object data
     HARDNESS = 1
@@ -23,8 +24,8 @@ class Constants:
     TRUCK_SPEED = 1
     LOG_SPEED = 1
 
-    GENRANGE_START = 35
-    GENRANGE_END = 150
+    GENRANGE_START = 45
+    GENRANGE_END = 200
 
     def set_hardness(hardness):
         HARDNESS = hardness

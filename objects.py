@@ -40,12 +40,49 @@ class RoadSlot(Slot):
         if hits[0]:
             return True
 
+class RiverSlot(Slot):
+    def __init__(self, pos):
+        super().__init__(pos)
+        self.surf.fill(con.river_blue)
+        self.object_speed = random.choice([-1, 1]) * con.LOG_SPEED
+        self.type = "river"
+
+    def generate_obstacle(self, random_start=False):
+        new_object = Log(self, random_start)
+        self.gen_timer = random.randint(con.GENRANGE_START, con.GENRANGE_END) + abs(new_object.rect.left - new_object.rect.right)
+        return new_object, [Groups.all_sprites, Groups.logs]
+
+    def kill_condition(self, player):
+        # Checks if the player is on a log or not
+        # If they're not, they die
+        pass
+
 
 class Truck(pygame.sprite.Sprite):
     def __init__(self, slot, random_start):
         super().__init__()
-        self.surf = pygame.Surface((random.randint(30, 50), 20))
+        self.surf = pygame.Surface((random.choice([30, 40, 50]), 20))
         self.surf.fill(con.truck_color)
+        self.rect = self.surf.get_rect()
+        self.slot = slot
+
+        if not random_start:
+            if self.slot.object_speed > 0:
+                xval = self.slot.rect.left
+            else:
+                xval = self.slot.rect.right
+            self.rect.center = ((xval, slot.rect.centery))
+        else:
+            self.rect.center = (( random.randint(0, con.SCREEN_WIDTH), slot.rect.centery ))
+
+    def update(self):
+        self.rect.centerx += self.slot.object_speed
+
+class Log(pygame.sprite.Sprite):
+    def __init__(self, slot, random_start):
+        super().__init__()
+        self.surf = pygame.Surface((random.choice([40, 50, 60, 70]), 20))
+        self.surf.fill(con.log_brown)
         self.rect = self.surf.get_rect()
         self.slot = slot
 
