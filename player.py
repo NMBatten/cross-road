@@ -25,4 +25,7 @@ class Player(pygame.sprite.Sprite):
             self.pos.y -= 30
 
     def update(self):
-        hits = pygame.sprite.spritecollide(self, Groups.obstacles, False)
+        hits = pygame.sprite.spritecollide(self, Groups.obstacles,  False)
+        if hits:
+            if hits[0]:
+                return "playerkill"

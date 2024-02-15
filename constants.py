@@ -15,6 +15,7 @@ class Constants:
     grass_green = (20, 200, 5)
     river_blue = (5, 10, 230)
     road_gray = (200, 200, 200)
+    truck_color = (240, 0, 10)
 
     # Object data
     HARDNESS = 1
