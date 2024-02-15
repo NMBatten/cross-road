@@ -12,6 +12,7 @@ class Slot(pygame.sprite.Sprite):
         # print(pos)
         self.rect.center = pos
         self.type = "grass"
+        self.gen_timer = random.randint(5, 30)
 
     def update(self):
         pass
@@ -28,13 +29,15 @@ class RoadSlot(Slot):
 
     def generate_obstacle(self, random_start=False):
         new_object = Truck(self, random_start)
+        self.gen_timer = random.randint(con.GENRANGE_START, con.GENRANGE_END) + abs(new_object.rect.left - new_object.rect.right)
         return new_object, [Groups.all_sprites, Groups.deadly_obstacles]
 
     def kill_condition(self, player):
         # This checks whether or not the player should die based
         # on the type of slot
         hits = pygame.sprite.spritecollide(player, Groups.deadly_obstacles, False)
-        if hits:
+        print("you dead")
+        if hits[0]:
             return True
 
 
@@ -51,7 +54,7 @@ class Truck(pygame.sprite.Sprite):
                 xval = self.slot.rect.left
             else:
                 xval = self.slot.rect.right
-            self.rect.center = ((xval, slot.rect.center.y))
+            self.rect.center = ((xval, slot.rect.centery))
         else:
             self.rect.center = (( random.randint(0, con.SCREEN_WIDTH), slot.rect.centery ))
 

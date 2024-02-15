@@ -22,12 +22,19 @@ top_slot = Slot((int(con.SCREEN_WIDTH / 2), con.SCREEN_HEIGHT-15))
 Groups.all_sprites.add(p1)
 
 def generate_slot(slot_type):
-    # generates a new slot on top of the stack
+    # generates a new slot on top of the
+    # and adds it to the appropriate groups
     if slot_type == "grass":
         slot = Slot(slot_pos())
     elif slot_type == "road":
         slot = RoadSlot(slot_pos())
-    
+
+    if slot.type != "grass":
+            for index in range(random.randint(1, 3)):
+                object, associated_groups = slot.generate_obstacle(True)
+                for group in associated_groups:
+                    group.add(object)
+
     global top_slot
     top_slot = slot
     # print(top_slot)
@@ -51,12 +58,6 @@ def setup():
     # Should initialize with some objects already in the middle
     while top_slot.rect.top > - 100:
         generate_block()
-    for slot in Groups.slots:
-        if slot.type != "grass":
-            for index in range(random.randint(1, 4)):
-                object, associated_groups = slot.generate_obstacle(True)
-                for group in associated_groups:
-                    group.add(object)
 
 def display_objects():
     for object in Groups.deadly_obstacles:
@@ -85,12 +86,41 @@ while True:
             if event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_RIGHT, pygame.K_LEFT]:
                 p1.jump(event.key)
 
-    if p1.rect.top <= con.SCREEN_HEIGHT / 2.5:
+    if p1.rect.top <= con.SCREEN_HEIGHT / 2:
         for object in Groups.all_sprites:
-            object.rect.centery += 30
+            object.rect.centery += 15
+            if object.rect.top > con.SCREEN_HEIGHT + 30:
+                object.kill()
 
     while top_slot.rect.top > - 100:
         generate_block()
+
+    for slot in Groups.slots:
+        if slot.type != "grass":
+            if slot.gen_timer <= 0:
+                new_object, associated_groups = slot.generate_obstacle()
+                for group in associated_groups:
+                    group.add(new_object)
+            else:
+                slot.gen_timer -= 1
+
+    # current_slot = pygame.sprite.spritecollide(p1, Groups.slots, False)
+    if pygame.sprite.spritecollide(p1, Groups.deadly_obstacles, False):
+        for object in Groups.all_sprites:
+            pygame.display.update()
+            displaysurface.fill(con.grass_green)
+
+            display_objects()
+            time.sleep(1)
+            object.kill()
+            time.sleep(1)
+            displaysurface.fill((240, 0, 0))
+            pygame.display.update()
+            time.sleep(1)
+            pygame.quit()
+            sys.exit()
+
+
 
     displaysurface.fill(con.grass_green)
 

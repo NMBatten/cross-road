@@ -23,10 +23,10 @@ class Player(pygame.sprite.Sprite):
                 self.rect.centery += 30
         elif key == pygame.K_LEFT:
             if not self.rect.centerx - 30 < 0:
-                self.rect.centerx -= 30
+                self.rect.centerx -= 20
         elif key == pygame.K_RIGHT:
             if not self.rect.centerx + 30 > con.SCREEN_WIDTH:
-                self.rect.centerx += 30
+                self.rect.centerx += 20
 
 
     def update(self):

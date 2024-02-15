@@ -23,5 +23,8 @@ class Constants:
     TRUCK_SPEED = 1
     LOG_SPEED = 1
 
+    GENRANGE_START = 35
+    GENRANGE_END = 150
+
     def set_hardness(hardness):
         HARDNESS = hardness
