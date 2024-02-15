@@ -30,8 +30,9 @@ class Player(pygame.sprite.Sprite):
 
 
     def update(self):
-        # hits = pygame.sprite.spritecollide(self, Groups.obstacles,  False)
-        # if hits:
-        #     if hits[0]:
-        #         return "playerkill"
-        pass
+        log = pygame.sprite.spritecollide(self, Groups.logs, False)
+        if log:
+            self.rect.centerx += log[0].slot.object_speed
+
+        if self.rect.right > con.SCREEN_WIDTH:
+            pass

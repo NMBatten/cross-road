@@ -55,7 +55,7 @@ def generate_block():
     else:
         type = "river"
     generate_slot("grass")
-    for index in range(random.randint(3, 8)):
+    for index in range(random.randint(3, 7)):
         generate_slot(type)
     # generate_slot("grass")
 
@@ -81,6 +81,7 @@ def display_objects():
         displaysurface.blit(log.surf, log.rect)
 
     displaysurface.blit(p1.surf, p1.rect)
+    p1.update()
 
 setup()
 fps_counter = 0
@@ -115,8 +116,9 @@ while True:
             else:
                 slot.gen_timer -= 1
 
-    # current_slot = pygame.sprite.spritecollide(p1, Groups.slots, False)
-    if pygame.sprite.spritecollide(p1, Groups.deadly_obstacles, False):
+    current_slot = pygame.sprite.spritecollide(p1, Groups.slots, False)
+    # print(current_slot)
+    if current_slot[0].kill_condition(p1):
         for object in Groups.all_sprites:
             pygame.display.update()
             displaysurface.fill(con.grass_green)

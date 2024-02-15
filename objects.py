@@ -17,7 +17,7 @@ class Slot(pygame.sprite.Sprite):
     def update(self):
         pass
 
-    def kill_condition(self):
+    def kill_condition(self, player):
         return False
 
 class RoadSlot(Slot):
@@ -36,8 +36,8 @@ class RoadSlot(Slot):
         # This checks whether or not the player should die based
         # on the type of slot
         hits = pygame.sprite.spritecollide(player, Groups.deadly_obstacles, False)
-        print("you dead")
-        if hits[0]:
+        # print("you dead")
+        if hits:
             return True
 
 class RiverSlot(Slot):
@@ -55,7 +55,10 @@ class RiverSlot(Slot):
     def kill_condition(self, player):
         # Checks if the player is on a log or not
         # If they're not, they die
-        pass
+        if not pygame.sprite.spritecollideany(player, Groups.logs):
+            return True
+        else:
+            return False
 
 
 class Truck(pygame.sprite.Sprite):
@@ -81,16 +84,16 @@ class Truck(pygame.sprite.Sprite):
 class Log(pygame.sprite.Sprite):
     def __init__(self, slot, random_start):
         super().__init__()
-        self.surf = pygame.Surface((random.choice([40, 50, 60, 70]), 20))
+        self.surf = pygame.Surface((random.choice([50, 60, 70, 80]), 20))
         self.surf.fill(con.log_brown)
         self.rect = self.surf.get_rect()
         self.slot = slot
 
         if not random_start:
             if self.slot.object_speed > 0:
-                xval = self.slot.rect.left
+                xval = self.slot.rect.left - 20
             else:
-                xval = self.slot.rect.right
+                xval = self.slot.rect.right + 20
             self.rect.center = ((xval, slot.rect.centery))
         else:
             self.rect.center = (( random.randint(0, con.SCREEN_WIDTH), slot.rect.centery ))
