@@ -1,14 +1,17 @@
 from pygame.locals import *
 import pygame, random
 from constants import Constants as con
-from main import Groups
+from groups import Groups
 
 class Slot(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
         self.surf = pygame.Surface((con.SCREEN_WIDTH, 30))
         self.surf.fill(con.grass_green)
-        self.rect = self.surf.get_rect(center = pos)
+        self.rect = self.surf.get_rect()
+        # print(pos)
+        self.rect.center = pos
+        self.type = "grass"
 
     def update(self):
         pass
@@ -21,9 +24,11 @@ class RoadSlot(Slot):
         super().__init__(pos)
         self.surf.fill(con.road_gray)
         self.object_speed = random.choice([-1, 1]) * con.TRUCK_SPEED
+        self.type = "road"
 
     def generate_obstacle(self, random_start=False):
         new_object = Truck(self, random_start)
+        return new_object, [Groups.all_sprites, Groups.deadly_obstacles]
 
     def kill_condition(self, player):
         # This checks whether or not the player should die based
@@ -47,9 +52,9 @@ class Truck(pygame.sprite.Sprite):
                 xval = self.slot.rect.left
             else:
                 xval = self.slot.rect.right
-            self.pos = vec((xval, slot.rect.center.y))
+            self.rect.center = ((xval, slot.rect.center.y))
         else:
-            self.pos = vec(( random.randint(0, con.SCREEN_WIDTH), slot.rect.center.y ))
+            self.rect.center = (( random.randint(0, con.SCREEN_WIDTH), slot.rect.centery ))
 
     def update(self):
-        self.pos.x += self.slot.object_speed
+        self.rect.centerx += self.slot.object_speed

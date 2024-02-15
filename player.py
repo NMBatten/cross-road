@@ -1,7 +1,7 @@
 from pygame.locals import *
 import pygame
 from constants import Constants as con
-from main import Groups
+from groups import Groups
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, vec):
@@ -25,7 +25,8 @@ class Player(pygame.sprite.Sprite):
             self.pos.y -= 30
 
     def update(self):
-        hits = pygame.sprite.spritecollide(self, Groups.obstacles,  False)
-        if hits:
-            if hits[0]:
-                return "playerkill"
+        # hits = pygame.sprite.spritecollide(self, Groups.obstacles,  False)
+        # if hits:
+        #     if hits[0]:
+        #         return "playerkill"
+        pass
