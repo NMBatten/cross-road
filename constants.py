@@ -7,8 +7,8 @@ pygame.init()
 class Constants:
 
     # Screen and data setup
-    SCREEN_HEIGHT = 400
-    SCREEN_WIDTH = 500
+    SCREEN_HEIGHT = 500
+    SCREEN_WIDTH = 600
     FPS = 60
 
     # Colors

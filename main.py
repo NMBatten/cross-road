@@ -32,7 +32,7 @@ def generate_slot(slot_type):
         slot = RiverSlot(slot_pos())
 
     if slot.type != "grass":
-        for index in range(random.randint(1, 3)):
+        for index in range(random.randint(2, 3)):
             object, associated_groups = slot.generate_obstacle(True)
             for group in associated_groups:
                 group.add(object)
@@ -69,6 +69,10 @@ def setup():
 def display_objects():
     for object in Groups.deadly_obstacles:
         object.update()
+        if object.rect.right < -10:
+            object.kill()
+        elif object.rect.left > con.SCREEN_WIDTH + 10:
+            object.kill()
 
     for entity in Groups.slots:
         displaysurface.blit(entity.surf, entity.rect)
@@ -78,6 +82,10 @@ def display_objects():
 
     for log in Groups.logs:
         log.update()
+        if log.rect.right < -10:
+            log.kill()
+        elif log.rect.left > con.SCREEN_WIDTH + 10:
+            log.kill()
         displaysurface.blit(log.surf, log.rect)
 
     displaysurface.blit(p1.surf, p1.rect)
